@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  web:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    environment:
+      - VUE_APP_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://chatbot:chatbot@db:5432/chatbot
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: chatbot
+      POSTGRES_USER: chatbot
+      POSTGRES_PASSWORD: chatbot
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

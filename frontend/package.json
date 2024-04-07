@@ -1,0 +1,19 @@
+{
+    "name": "web-chatbot",
+    "version": "1.0.0",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "slick-carousel": "^1.8.1",
+        "vue": "^2.6.12",
+        "vue-router": "^3.5.1",
+        "vue-slick-carousel": "^1.0.6"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.5.13",
+        "@vue/cli-service": "~4.5.13"
+    }
+}
