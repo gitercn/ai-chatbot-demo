@@ -4,6 +4,9 @@
 
 This project was created for a programming challenge for an interview, intended to showcase my skills. This AI style web chatbot allows users to request a random set of dog images by entering a number from 1 to 8. The application is a full-stack project with a Python Flask backend, a Vue.js frontend, and a PostgreSQL database.
 
+The demo screenshot:
+![screenshot](screenshot.png)
+
 ## Features
 
 - This is a web chatbot project akin to an AI chatbot, with a user interface experience similar to that of AI platforms like ChatGPT.
@@ -31,16 +34,12 @@ The application is containerized using Docker.
 To run the application locally, you need to have Docker and Docker Compose installed. Once installed, you can clone the repository and start the application using the following commands:
 
 ```bash
-git clone https://github.com/gitercn/ai-chatbot.git
-cd ai-chatbot
+git clone https://github.com/gitercn/ai-chatbot-demo.git
+cd ai-chatbot-demo
 docker-compose up --build
 ```
 
 The application will be accessible at `http://localhost:8080` for the frontend and `http://localhost:5000` for the backend.
-
-### Deploying to a Cloud Provider
-
-
 
 ## API Reference
 
