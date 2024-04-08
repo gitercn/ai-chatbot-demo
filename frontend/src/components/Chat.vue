@@ -3,9 +3,11 @@
     <div class="chat-window">
       <div class="messages" ref="messagesContainer">
         <div v-for="entry in messages" :key="entry.id" class="message">
+          <!-- Display user input -->
           <div v-if="entry.user_input" class="user-message">
             <div class="message-z">{{ entry.user_input }}</div>
           </div>
+          <!-- Display images and breeds if available -->
           <div v-if="entry.images" class="bot-message">
             <vue-slick-carousel v-bind="slickOptions">
               <div v-for="(image, index) in entry.images" :key="index" class="image-container">
@@ -14,6 +16,7 @@
               </div>
             </vue-slick-carousel>
           </div>
+          <!-- Display text message or error -->
           <div v-if="entry.text" class="bot-message">
             <div class="message-content">{{ entry.text }}</div>
           </div>
@@ -22,9 +25,12 @@
       </div>
       <form @submit.prevent="submitMessage" class="user-input">
         <input type="text" v-model="message" placeholder="Please send a number between 1 and 8..." class="input-field">
+        <!-- Clear button to clear the input field -->
+        <button type="button" class="clear-button" @click="clearInput" v-if="message">X</button>
         <button type="submit" class="send-button">Send</button>
       </form>
     </div>
+    <!-- Modal for full-screen image view -->
     <div v-if="selectedImage" class="modal" @click="closeModal">
       <img :src="selectedImage" class="full-screen-image" />
     </div>
@@ -65,10 +71,17 @@ export default {
     enlargeImage(image) {
       this.selectedImage = image;
       document.body.classList.add('no-scroll', 'blur-background');
+
+      document.querySelector('.modal').classList.add('active');
     },
     closeModal() {
       this.selectedImage = null;
       document.body.classList.remove('no-scroll', 'blur-background');
+
+      document.querySelector('.modal').classList.remove('active');
+    },
+    clearInput() {
+      this.message = '';
     },
     async loadChatHistory() {
       try {
@@ -228,6 +241,19 @@ export default {
   cursor: pointer;
 }
 
+.clear-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  margin-right: 5px;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+
+
 .user-input button:hover {
   background-color: #0056b3;
 }
@@ -259,6 +285,14 @@ export default {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .full-screen-image {
@@ -283,5 +317,25 @@ body.blur-background> :not(.modal) {
 .waiting-message {
   color: #999;
   font-style: italic;
+}
+
+
+/* Custom scrollbar style */
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+/* Cursor pointer for images */
+.image-container img {
+  cursor: pointer;
 }
 </style>

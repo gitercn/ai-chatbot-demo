@@ -4,6 +4,7 @@ from models import ChatHistory, Session
 from flask import Blueprint, jsonify, request
 from datetime import datetime
 import re
+MAX_ATTEMPTS = 50
 
 chat = Blueprint('chat', __name__)
 
@@ -26,7 +27,8 @@ def chat_route():
 def get_dog_images(count):
     breeds = set()
     urls = []
-    while len(urls) < count:
+    attempts = 0
+    while len(urls) < count and attempts < MAX_ATTEMPTS:
         response = requests.get("https://dog.ceo/api/breeds/image/random")
         if response.status_code == 200:
             image_url = response.json()['message']
@@ -34,6 +36,7 @@ def get_dog_images(count):
             if breed not in breeds:
                 breeds.add(breed)
                 urls.append(image_url)
+        attempts += 1
     return urls
 
 def save_chat_history(user_input, execution_time, is_valid, result):
